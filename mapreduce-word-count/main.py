@@ -75,9 +75,11 @@ def main():
         reducer_inputs[reducer_id][word] = counts
 
     # Run the reducers
-    results = []
-    for reducer_input in reducer_inputs:
-        results.append(reducer(reducer_input))
+    # Run the reducers concurrently
+    with ThreadPoolExecutor(max_workers=NUM_REDUCERS) as executor:
+        results = list(
+            executor.map(reducer, reducer_inputs)
+        )
 
     # Create the output directory
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
