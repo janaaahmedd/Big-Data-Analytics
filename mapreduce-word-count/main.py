@@ -74,7 +74,6 @@ def main():
         reducer_id = hash(word) % NUM_REDUCERS
         reducer_inputs[reducer_id][word] = counts
 
-    # Run the reducers
     # Run the reducers concurrently
     with ThreadPoolExecutor(max_workers=NUM_REDUCERS) as executor:
         results = list(
